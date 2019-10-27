@@ -103,7 +103,9 @@ object TwitterCredentials {
 
 Para esta parte de la práctica, para facilitar la corrección y visualización del ejercicio, he dejado el grueso del código en la función "main" aunque en un entorno de producción no sería lo más recomendable.
 
-El código en: AAAAAAAAQUUUUUUUUUUUIIIIIIIIIIIIII
+El código en: 
+https://github.com/ignaciogallegossanchez/KeepcodingKafkaSniffer/
+
 
 El sniffer es el encargado de:
  * Desencriptar los mensajes
@@ -127,7 +129,7 @@ Aunque es perfectamente usable, los **problemas** llegan al intentar quedarnos c
  * head(10)
  * Generando una columna indice y filtrando por ".where(col(index) < 10)"
 
-En todos los casos obtengo un **error** del framework Spark indicando que no se soportan esas operaciones en modo streaming.
+En todos los casos obtengo un **ERROR** del framework Spark indicando que no se soportan esas operaciones en modo streaming.
 
 Tras varias horas de intentos, llego a la **segunda aproximación, y solución definitiva**: utilizar la propia ventana de validez dada por _Spark event-time streaming_.
 
