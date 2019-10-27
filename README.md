@@ -186,8 +186,40 @@ En este punto tendremos un DataFrame con los siguientes campos:
  * **UserName (string)**: El nombre del usuario de twitter que envía el mensaje
  * **UserLocation (string)**: La ciudad desde la que se envía el tweet (el nombre)
 
+A continuación nos acercamos al objetivo del ejercicio:
 
-
+```scala
+    // Convert to a list of words, filtered and clean, and without dupplicated messages, and sorted
+    val dfWords = df1
+      .dropDuplicates("MsgID")
+      .select(
+        explode(splitter(col("MsgText"))).as("Word")//,
+      )
+      .filter(row => {
+        val word = row.getAs[String]("Word")
+        word.size > 1 && !( articulos.contains(word) ||
+          preposiciones.contains(word) ||
+          conjuncionSubordinada.contains(word) ||
+          conjuncionCoordinada.contains(word))
+      })
+      .groupBy($"Word").count( )
+      .orderBy($"count".desc)
+      .select($"Word")
+ ```
+ 
+ En donde:
+  1. Eliminamos los duplicados, basándonos en el ID del mensaje original
+  2. Utilizando el UDF "splitter" (que divide el mensaje en palabras), generamos un nuevo DF un una columna llamada "Word" que contiene todas las palabras del mensaje (y de todos los demás)
+  3. Filtramos las palabras, quitando los articulos, preposiciones y conjunciones (quitando también las palabras de longitud menor que 2 caracteres)
+  4. Agrupamos las palabras, generando una nueva columna "count" con el número de repeticiones
+  5. Ordenamos por el número de ocurrencias en orden descendente
+  6. Por último nos quedamos tan solo con la columna de palabras, ahora ordenada.
+  
+ En este momento el DataFrame tiene un schema como el siguiente:
+  * **Word (string)**: Palabra
+  
+ 
+  
 
 
 ## GraphX (opcional)
