@@ -86,7 +86,7 @@ Al ejecutarlo veremos en el consumer que dejamos ejecutando en el paso anterior 
 
 Nota: Para que funcione correctamente debemos dar de alta nuestra cuenta de Twitter como desarrollador (en https://dev.twitter.com/apps/new), dar de alta una nueva aplicación, y rellenar los datos en el archivo "TwitterCredentials.scala":
 
-'''scala
+```scala
 package twitterproducer
 
 // Twitter client App credentials
@@ -96,7 +96,7 @@ object TwitterCredentials {
   val APITOKEN        = "3405730379-OLIkayvQ5JupUoEaYP0UQgNsQNWUrj2cevH8oGp"
   val APITOKENSECRET  = "W8r9IeGMJiGtoFrXlNT798TwBou1NUhfCwzC5NUQX7VwO"
 }
-'''
+
 
 
 
