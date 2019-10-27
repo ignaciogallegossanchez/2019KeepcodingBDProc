@@ -1,7 +1,9 @@
 # Práctica BigData Processing
 Ignacio Gallegos Sánchez
 
+
 ## Parte Obligatoria (Spark Streaming)
+
 
 ### Kafka
 
