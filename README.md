@@ -103,7 +103,8 @@ object TwitterCredentials {
 
 Para esta parte de la práctica, para facilitar la corrección y visualización del ejercicio, he dejado el grueso del código en la función "main" aunque en un entorno de producción no sería lo más recomendable.
 
-El código en: 
+El código en mi repositorio:
+
 https://github.com/ignaciogallegossanchez/KeepcodingKafkaSniffer/
 
 
