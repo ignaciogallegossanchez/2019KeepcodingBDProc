@@ -1,9 +1,11 @@
 # Práctica BigData Processing
 Ignacio Gallegos Sánchez
 
+## Enunciado
 
-## Parte Obligatoria (Spark Streaming)
+El enunciado de la práctica puede descargarse de aquí.
 
+## Parte obligatoria (Spark Streaming)
 
 ### Kafka
 
