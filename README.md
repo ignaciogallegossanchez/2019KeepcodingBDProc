@@ -8,7 +8,8 @@ El enunciado de la práctica puede descargarse de aquí.
 ## Parte obligatoria (Spark Streaming)
 
 El enunciado de la parte de streaming solicita obtener los datos de unos archivos CSV con los datos provenientes de los dispositivos IOT.
-Para hacerlo más realista, me he tomado la libertad de obtener, encriptar y encolar los mensajes desde Twitter a Kafka directamente. Las demás partes del ejercicio son exactamente como se solicitaban en el enunciado (con las peculiaridades propias de la importación de mensajes de twitter, por ejemplo que en vez de disponer del ID de un dispositivo IOT, tendremos un nombre de usuario.
+
+Para hacerlo más realista, me he tomado la libertad de **obtener, encriptar y encolar** los mensajes desde Twitter a Kafka directamente. Las demás partes del ejercicio son exactamente como se solicitaban en el enunciado (con las peculiaridades propias de la importación de mensajes de twitter, por ejemplo que en vez de disponer del ID de un dispositivo IOT, tendremos un nombre de usuario.
 
 A grandes rasgos tendremos una arquitectura como la siguiente:
 
