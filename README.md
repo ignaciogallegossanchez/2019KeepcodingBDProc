@@ -1,2 +1,4 @@
-# 2019KeepcodingBDProc
-BigData Processing - Practica Keepcoding 2019
+# Práctica BigData Processing
+Ignacio Gallegos Sánchez
+
+
