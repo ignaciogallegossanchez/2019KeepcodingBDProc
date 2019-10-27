@@ -218,8 +218,45 @@ A continuación nos acercamos al objetivo del ejercicio:
  En este momento el DataFrame tiene un schema como el siguiente:
   * **Word (string)**: Palabra
   
+ Lo siguiente que haremos es ejecutar la salida **cada hora** en memoria:
  
-  
+ ```scala
+    // Put table in memory ready for requests
+    val query = dfWords.writeStream
+      .trigger(Trigger.ProcessingTime("1 hour"))
+      .format("memory")
+      .outputMode("complete")
+      .queryName("resultTable")
+      .start()
+ ```
+ 
+En donde:
+ 1. Indicamos que se debe ejecutar cada hora
+ 2. Configuramos para dejarla en memoria
+ 3. El modo de salida lo indicamos como completo (cada hora veremos los datos de una hora)
+ 4. Dejamos el resultado listo para consultar como si de la tabla "resultTable" se tratara
+ 5. Indicamos .start() pero **NO** await termination, ya que queremos que siga la ejecución
+ 
+**De este modo, gracias al watermark de 1 hora, solo tenemos datos de una hora hacia atrás, y esta tabla se generará cada hora, sobre los datos que tenemos, es decir, CADA HORA TRATAREMOS LOS DATOS DE UNA HORA ATRÁS**
+
+Para quedarnos con los 10 primeros elementos y comprobar si están en la lista negra de palabras, haremos una consulta sobre esta tabla en memoria:
+
+```scala
+    // Check if top-10 words are blacklisted, and notify
+    while(true){
+      val topTen = spark.sql("SELECT * from resultTable LIMIT 10").as("result")
+      val result = topTen.join(blacklist, $"result.Word"=== col("black.BlacklistWord"), "inner")
+      if (result.count() > 0)
+        notifier.notify("ALARMA AL GOBIERNO DE CLOACALANDIA")
+      Thread.sleep(3600*1000)
+    }
+```
+En donde:
+ 1. Hacemos una consulta quedándonos con los 10 primeras palabras (ya estaban ordenadas así que son las 10 que más se repiten)
+ 2. Hacemos un join con las palabras de la lista negra
+ 3. Si el resultado tiene algún elemento, entonces es que las 10 palabras más repetidas están en la lista negra, luego debemos notificar
+ 4. Dormimos hasta la siguiente hora (3600 segundos)
+
 
 
 ## GraphX (opcional)
