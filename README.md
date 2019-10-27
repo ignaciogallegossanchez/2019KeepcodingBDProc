@@ -13,7 +13,7 @@ Para hacerlo más realista, me he tomado la libertad de **obtener, encriptar y e
 
 A grandes rasgos tendremos una arquitectura como la siguiente:
 
-<center><img src="./images/kafka-general.png" alt="drawing" width="750"/></center>
+<center><img src="./images/Kafka-general.png" alt="drawing" width="750"/></center>
 
 ### Kafka
 
