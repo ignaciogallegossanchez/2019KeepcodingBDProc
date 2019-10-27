@@ -127,7 +127,60 @@ Aunque es perfectamente usable, los **problemas** llegan al intentar quedarnos c
  * head(10)
  * Generando una columna indice y filtrando por ".where(col(index) < 10)"
 
-En todos los casos obtengo un error del framework Spark indicando que no se soportan esas operaciones en modo streaming.
+En todos los casos obtengo un **error** del framework Spark indicando que no se soportan esas operaciones en modo streaming.
+
+Tras varias horas de intentos, llego a la **segunda aproximación, y solución definitiva**: utilizar la propia ventana de validez dada por _Spark event-time streaming_.
+
+A continuación procedo a comentar paso a paso las partes más importantes del código:
+
+Primero, como es natural, creamos la sesión spark para conectarnos al cluster local:
+
+```scala
+    // Configure sparkSession. Will use al cores of local server ("local[*]")
+    val spark = SparkSession
+      .builder()
+      .appName("Cloacalandia")
+      .master("local[*]")
+      .config("spark.io.compression.codec", "snappy") // Avoids LZ4BlockInputStream.init exception when grouping
+      .getOrCreate()
+```
+
+Sólo destacar que se ha de establecer el protocolo de compresión "snappy" para evitar conflictos con el algoritmo de compresión de scala.
+
+El siguiente paso importante es cómo leemos de kafka y dejamos preparado el dataframe:
+
+```scala
+    // Read from Kafka and prepare input
+    val df1 = spark
+      .readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("subscribe", "keepcoding") // Kafka topic
+      .load()
+      .select(decrypter(col("value")).as("decryptedValue"))
+      .select(from_json(col("decryptedValue").cast("string"), Schemas.twitterPartialSchema).as("data"))
+      .select(
+          expr("cast(cast(data.timestamp_ms as double)/1000 as timestamp) as timestamp"),
+          col("data.id").as("MsgID"),
+          col("data.text").as("MsgText"),
+          col("data.user.id").as("UserID"),
+          col("data.user.name").as("UserName"),
+          col("data.user.location").as("UserLocation")
+        )
+      .withWatermark("timestamp", "1 hour")
+```
+
+Aquí hay varios puntos intenresantes:
+ 1. Se lee en formato stream
+ 2. Se establece que se lee desde kafka, en localhost y del topic "keepcoding"
+ 3. Se **desencripta** la columna "value" de la entrada de kafka (el que contiene el mensaje directamente de twitter) 
+root
+ |-- timestamp: timestamp (nullable = true)
+ |-- MsgID: long (nullable = true)
+ |-- MsgText: string (nullable = true)
+ |-- UserID: long (nullable = true)
+ |-- UserName: string (nullable = true)
+ |-- UserLocation: string (nullable = true)
 
 
 
