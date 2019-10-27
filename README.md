@@ -78,13 +78,13 @@ Lo que hace es:
  * Cada mensaje es **encriptado** con la clave "sEcReTcL0acaland"
  * Se **envían a Kafka** al topic "keepcoding"
 
-Al ejecutarlo veremos en el consumer que dejamos ejecutando en el paso anterior mensajes encriptados como los siguientes:
+Al ejecutarlo veremos en el consumer que dejamos ejecutando en el paso anterior ha empezado a mostrar mensajes encriptados como los siguientes:
 
 <center><img src="./images/consola-encriptado.png" alt="drawing" width="750"/></center>
 
 
 
-Nota: Para que funcione correctamente debemos dar de alta nuestra cuenta de Twitter como desarrollador, dar de alta una nueva aplicación, y rellenar los datos en el archivo "TwitterCredentials.scala":
+Nota: Para que funcione correctamente debemos dar de alta nuestra cuenta de Twitter como desarrollador (en https://dev.twitter.com/apps/new), dar de alta una nueva aplicación, y rellenar los datos en el archivo "TwitterCredentials.scala":
 
 '''scala
 package twitterproducer
