@@ -101,6 +101,38 @@ object TwitterCredentials {
 
 ### Sniffer 
 
-## Parte opcional (GraphX)
+Para esta parte de la práctica, para facilitar la corrección y visualización del ejercicio, he dejado el grueso del código en la función "main" aunque en un entorno de producción no sería lo más recomendable.
 
-<No implementada>
+El código en: AAAAAAAAQUUUUUUUUUUUIIIIIIIIIIIIII
+
+El sniffer es el encargado de:
+ * Desencriptar los mensajes
+ * Formatear correctamente los datos recibidos
+ * Tratarlos (dividir frases en palabras)
+ * Filtrarlos (eliminar las que no tienen valor)
+ * Hacer conteo de las más utilizadas en un rango temporal (1h)
+ * Cruzar las 10 mas utilizadas con las que están en una lista negra
+ * En caso de que el resultado contenga alguna palabra (es decir, de las 10 más utilizadas en la ventana temporal alguna estaba en la lista negra) enviar una notificación.
+ 
+__¿Cómo abordar el ejercicio?__
+
+Dado que en el enunciado se especifica que se debe procesar una ventana de una hora, **mi primera aproximación** fue la de utilizar el soporte de ventanas temporal que Spark nos brinda (usando "window" sobre un timestamp). Algo como lo siguiente:
+
+```scala
+.groupBy(window(col("timestamp"), "1 hour")).count()
+```
+
+Aunque es perfectamente usable, los **problemas** llegan al intentar quedarnos con los n-primeros elementos, probando con:
+ * limit(10)
+ * head(10)
+ * Generando una columna indice y filtrando por ".where(col(index) < 10)"
+
+En todos los casos obtengo un error del framework Spark indicando que no se soportan esas operaciones en modo streaming.
+
+
+
+
+
+## GraphX (opcional)
+
+No implementada
