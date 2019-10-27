@@ -3,7 +3,7 @@ Ignacio Gallegos Sánchez
 
 ## Enunciado
 
-El enunciado de la práctica puede descargarse de aquí.
+El enunciado de la práctica puede descargarse de aquí. ./resources/EspiasBigData.pdf
 
 ## Parte obligatoria (Spark Streaming)
 
@@ -13,7 +13,7 @@ Para hacerlo más realista, me he tomado la libertad de **obtener, encriptar y e
 
 A grandes rasgos tendremos una arquitectura como la siguiente:
 
-<center><img src="./resources/kafka-general.png" alt="drawing" width="750"/></center>
+<center><img src="./images/kafka-general.png" alt="drawing" width="750"/></center>
 
 ### Kafka
 
