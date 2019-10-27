@@ -15,6 +15,8 @@ A grandes rasgos tendremos una arquitectura como la siguiente:
 
 <center><img src="./images/Kafka-general.png" alt="drawing" width="750"/></center>
 
+
+
 ### Kafka
 
 Lo primero que haremos será descargar kafka y escribir unos comandos básicos para ejecutarlo en nuestro ordenador.
@@ -37,6 +39,7 @@ Por último arrancamos un consumer de consola y lo dejamos a la escucha:
 ```bash
 ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic keepcoding --from-beginning
 ```
+
 
 
 ### Twitter producer
@@ -71,9 +74,32 @@ object Main {
 ```
 
 Lo que hace es:
-recibe los mensajes de twitter
-los encrypta
-los envía a kafka
+ * **Recibe los mensajes** de twitter (buscando los términos "#bigdata", "#keepcoding", "datos", "bigdata" y "developer")
+ * Cada mensaje es **encriptado** con la clave "sEcReTcL0acaland"
+ * Se **envían a Kafka** al topic "keepcoding"
+
+Al ejecutarlo veremos en el consumer que dejamos ejecutando en el paso anterior mensajes encriptados como los siguientes:
+
+<center><img src="./images/consola-encriptado.png" alt="drawing" width="750"/></center>
+
+
+
+Nota: Para que funcione correctamente debemos dar de alta nuestra cuenta de Twitter como desarrollador, dar de alta una nueva aplicación, y rellenar los datos en el archivo "TwitterCredentials.scala":
+
+'''scala
+package twitterproducer
+
+// Twitter client App credentials
+object TwitterCredentials {
+  val CONSUMERKEY     = "cWJg5FzMPnrt5cokzlZsoyrGh"
+  val CONSUMERSECRET  = "oVBG2zXk4Ief0i2KJCgxynV8irrGeGvCPcXwmKdKbb1Elvm6Mw"
+  val APITOKEN        = "3405730379-OLIkayvQ5JupUoEaYP0UQgNsQNWUrj2cevH8oGp"
+  val APITOKENSECRET  = "W8r9IeGMJiGtoFrXlNT798TwBou1NUhfCwzC5NUQX7VwO"
+}
+'''
+
+
+
 
 ### Sniffer 
 
