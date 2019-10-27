@@ -173,14 +173,18 @@ El siguiente paso importante es cómo leemos de kafka y dejamos preparado el dat
 Aquí hay varios puntos intenresantes:
  1. Se lee en formato stream
  2. Se establece que se lee desde kafka, en localhost y del topic "keepcoding"
- 3. Se **desencripta** la columna "value" de la entrada de kafka (el que contiene el mensaje directamente de twitter) 
-root
- |-- timestamp: timestamp (nullable = true)
- |-- MsgID: long (nullable = true)
- |-- MsgText: string (nullable = true)
- |-- UserID: long (nullable = true)
- |-- UserName: string (nullable = true)
- |-- UserLocation: string (nullable = true)
+ 3. Se **desencripta** la columna "value" de la entrada de kafka (el que contiene el mensaje directamente de twitter) utilizando la función (UDF) "decrypter", y deja el resultado en la columna "decryptedValue".
+ 4. El contenido de "data" es ahora el JSON que describe el mensaje del usuario, el cual contiene multitud de campos. En el siguiente paso **leemos la estructura del JSON** utilizando el UDF predefinido "from_json" y ponemos el resultado en "data".
+ 5. Nos quedamos con los datos que más nos interesan del mensaje de twitter, haciendo casting de la hora UNIX al tipo "timestamp"
+ 6. **Muy importante**, establecemos para el event-time streaming que la marca temporal está en la columna "timestamp", además establecemos que **debe desechar los datos de más de 1 hora**.
+ 
+En este punto tendremos un DataFrame con los siguientes campos:
+ * **timestamp (timestamp)**: contiene la marca temporal del mensaje (marcado en origen)
+ * **MsgID (long)**: Contiene el ID único del mensaje
+ * **MsgText (string)**: El texto introducido por el usuario en el mensaje
+ * **UserID (long)**: El ID único del usuraio que envía el mensaje
+ * **UserName (string)**: El nombre del usuario de twitter que envía el mensaje
+ * **UserLocation (string)**: La ciudad desde la que se envía el tweet (el nombre)
 
 
 
