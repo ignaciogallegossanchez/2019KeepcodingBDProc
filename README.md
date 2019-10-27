@@ -75,7 +75,7 @@ object Main {
 
 Lo que hace es:
  * **Recibe los mensajes** de twitter (buscando los términos "#bigdata", "#keepcoding", "datos", "bigdata" y "developer")
- * Cada mensaje es **encriptado** con la clave "sEcReTcL0acaland"
+ * Cada mensaje es **encriptado** con la clave "sEcReTcL0acaland" con algoritmo **AES-128**
  * Se **envían a Kafka** al topic "keepcoding"
 
 Al ejecutarlo veremos en el consumer que dejamos ejecutando en el paso anterior ha empezado a mostrar mensajes encriptados como los siguientes:
