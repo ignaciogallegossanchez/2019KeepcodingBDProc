@@ -3,7 +3,7 @@ Ignacio Gallegos Sánchez
 
 ## Enunciado
 
-El enunciado de la práctica puede descargarse de aquí. ./resources/EspiasBigData.pdf
+El enunciado de la práctica puede descargarse de [aquí](./resources/EspiasBigData.pdf) en formato PDF.
 
 ## Parte obligatoria (Spark Streaming)
 
@@ -17,13 +17,26 @@ A grandes rasgos tendremos una arquitectura como la siguiente:
 
 ### Kafka
 
-Lo primero que haremos será descargar kafka y escribir unos comandos básicos para ejecutarlo en nuestro ordenador
+Lo primero que haremos será descargar kafka y escribir unos comandos básicos para ejecutarlo en nuestro ordenador.
+
+Primero arrancaremos kafka con la configuración básica:
+
+```bash
 ./bin/zookeeper-server-start.sh config/zookeeper.properties
 ./bin/kafka-server-start.sh config/server.properties
+```
 
+Una vez arrancado crearemos el **topic** usado en nuestra práctica, en mi caso "**keepcoding**":
+
+```bash
 ./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic keepcoding
-./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic keepcoding --from-beginning
+```
 
+Por último arrancamos un consumer de consola y lo dejamos a la escucha:
+
+```bash
+./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic keepcoding --from-beginning
+```
 
 
 ### Twitter producer
